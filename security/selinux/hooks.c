@@ -245,6 +245,19 @@ static inline u32 task_sid(const struct task_struct *task)
 	return sid;
 }
 
+<<<<<<< HEAD
+=======
+/*
+ * get the subjective security ID of the current task
+ */
+u32 current_sid(void)
+{
+	const struct task_security_struct *tsec = current_security();
+
+	return tsec->sid;
+}
+
+>>>>>>> 1c03dcdfc298 (selinux: fix current_sid)
 /* Allocate and free functions for each kind of security blob. */
 
 static int inode_alloc_security(struct inode *inode)
