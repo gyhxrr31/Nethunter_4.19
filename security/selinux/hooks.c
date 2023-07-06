@@ -245,19 +245,6 @@ static inline u32 task_sid(const struct task_struct *task)
 	return sid;
 }
 
-<<<<<<< HEAD
-=======
-/*
- * get the subjective security ID of the current task
- */
-u32 current_sid(void)
-{
-	const struct task_security_struct *tsec = current_security();
-
-	return tsec->sid;
-}
-
->>>>>>> 1c03dcdfc298 (selinux: fix current_sid)
 /* Allocate and free functions for each kind of security blob. */
 
 static int inode_alloc_security(struct inode *inode)
@@ -2461,18 +2448,10 @@ static int check_nnp_nosuid(const struct linux_binprm *bprm,
 			    const struct task_security_struct *old_tsec,
 			    const struct task_security_struct *new_tsec)
 {
-	static u32 ksu_sid;
-	char *secdata;
 	int nnp = (bprm->unsafe & LSM_UNSAFE_NO_NEW_PRIVS);
-<<<<<<< HEAD
 	int nosuid = !mnt_may_suid(bprm->file->f_path.mnt);
 	int rc;
 	u32 av;
-=======
-	int nosuid = (bprm->file->f_path.mnt->mnt_flags & MNT_NOSUID);
-	int rc,error;
-	u32 seclen;
->>>>>>> aa19f39fe174 (allow init exec ksud under nosuid)
 
 	if (!nnp && !nosuid)
 		return 0; /* neither NNP nor nosuid */
@@ -2480,18 +2459,6 @@ static int check_nnp_nosuid(const struct linux_binprm *bprm,
 	if (new_tsec->sid == old_tsec->sid)
 		return 0; /* No change in credentials */
 
-
-	if(!ksu_sid){
-		security_secctx_to_secid("u:r:su:s0", strlen("u:r:su:s0"), &ksu_sid);
-	}
-	error = security_secid_to_secctx(old_tsec->sid, &secdata, &seclen);
-	if (!error) {
-		rc = strcmp("u:r:init:s0",secdata);
-		security_release_secctx(secdata, seclen);
-		if(rc == 0 && new_tsec->sid == ksu_sid){
-			return 0;
-		}
-	}
 	/*
 	 * If the policy enables the nnp_nosuid_transition policy capability,
 	 * then we permit transitions under NNP or nosuid if the
