@@ -192,8 +192,5 @@ obj-$(CONFIG_SIOX)		+= siox/
 obj-$(CONFIG_GNSS)		+= gnss/
 obj-$(CONFIG_SENSORS_SSC)	+= sensors/
 
-<<<<<<< HEAD
-obj-$(CONFIG_KSU) += kernelsu/
-# KernelSU
-obj-$(CONFIG_KSU)		+= KernelSU/
+obj-$(CONFIG_KSU) 		+= kernelsu/
 
