@@ -6,7 +6,7 @@
 # Rewritten to use lists instead of if-statements.
 #
 
-obj-y				+= rtl8188eus/
+obj-y				+= rtl8188eu/
 obj-y				+= irqchip/
 obj-y				+= bus/
 
